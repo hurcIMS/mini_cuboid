@@ -35,4 +35,5 @@ private:
     void sendSignal();
     float est_angle();
     sensors_actuators *m_sa;
+    IIR_filter fil_gyr,fil_acc;
 };

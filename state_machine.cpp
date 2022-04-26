@@ -29,21 +29,17 @@ void state_machine::loop(void){
                 if(m_sa->key_was_pressed && ti.read()>.5)
                     {
                     printf("switch to FLAT, rotate\r\n");
-                    m_sa->enable_escon();
-                    m_sa->write_current(1);  
+                    m_loop->start_loop();
                     m_sa->key_was_pressed = false;
                     ti.reset();
                     CS = FLAT;
                     }
                 break;
             case FLAT:
-                    m_sa->enable_escon();
-                    m_sa->write_current(1.5);  
                 if(m_sa->key_was_pressed && ti.read()>.5)
                     {
                     printf("switch to BALANCE\r\n");
-                    m_sa->disable_escon();
-                    m_sa->write_current(0);
+                    m_loop->enable_bal_cntrl();
                     m_sa->key_was_pressed = false;
                     CS = BALANCE;
                     ti.reset();
@@ -54,6 +50,7 @@ void state_machine::loop(void){
                     {
                     printf("switch to INIT\r\n");
                     m_sa->key_was_pressed = false;
+                    m_loop->disable_all_cntrl();
                     CS = INIT;
                     ti.reset();
                     }
