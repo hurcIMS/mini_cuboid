@@ -39,7 +39,7 @@ void ControllerLoop::loop(void){
         if(bal_cntrl_enabled)
             {
                 float M_des = -(Kmat[0]*phi_bd + Kmat[1] * m_sa->get_gz());
-                i_des = saturate(M_des/km,-13,13); 
+                i_des = saturate(M_des/km,-13,13);    // need at least 9 Amps to lift up!
                 m_sa->enable_escon();      
             }
         else
