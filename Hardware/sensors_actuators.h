@@ -52,7 +52,7 @@ private:
     float accx,accy,gyrz;       // accelerations and gyroscope
     void but_pressed(void);
     void but_released(void);
-    IIR_filter fil_gyr,fil_acc;
+    IIR_filter fil_gyr,fil_accx,fil_accy;
     unwrap_2pi uw_phi_bd;
 
 

@@ -46,8 +46,14 @@ void ControllerLoop::loop(void){
             {
                 i_des = 0.0;
                 m_sa->disable_escon();      
-                if(++k == 0)          
-                    printf("ax: %f ay: %f gz: %f phi_fw :%f phi_bd :%f\r\n",m_sa->get_ax(),m_sa->get_ay(),m_sa->get_gz(),m_sa->get_phi_fw(),m_sa->get_phi_bd());
+                if(++k >= 50)          
+                    {
+                    //printf("ax: %f ay: %f gz: %f phi_fw :%f phi_bd :%f\r\n",m_sa->get_ax(),m_sa->get_ay(),m_sa->get_gz(),m_sa->get_phi_fw(),m_sa->get_phi_bd());
+                    //printf("%f %f %f %f %f\r\n",ti.read(),m_sa->get_ax(),m_sa->get_ay(),m_sa->get_gz(),m_sa->get_phi_bd());
+                    printf("%f %f %f %f\r\n",ti.read(),m_sa->get_vphi_fw(),m_sa->get_gz(),m_sa->get_phi_fw());
+                    //printf("%f %f %f %f\r\n",ti.read(),m_sa->get_vphi_fw(),m_sa->get_gz(),m_sa->get_phi_fw());
+                    k=0;
+                    }
             }
         
         // -------------------------------------------------------------

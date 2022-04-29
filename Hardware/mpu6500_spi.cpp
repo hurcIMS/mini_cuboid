@@ -51,19 +51,21 @@ bool mpu6500_spi::init_inav(){
 		ThisThread::sleep_for(chrono::milliseconds(15));
     write2spi(MPUREG_INT_ENABLE,1<<0);
 		ThisThread::sleep_for(chrono::milliseconds(15));
-    printf("MPU6050::initialization ended\n");
-
+    printf("MPU6500::initialization ended\n");
 	return true;
     
 }
 
 bool mpu6500_spi::configuration(){
  
+    ThisThread::sleep_for(chrono::milliseconds(20));
 	write2spi(MPUREG_CONFIG,BITS_DLPF_CFG_42HZ); // Set Low Pass Filter Bandwidth to 41Hz (5.9 ms) for the Gyroscope
+    ThisThread::sleep_for(chrono::milliseconds(20));
     write2spi(MPUREG_ACCEL_CONFIG_2,0x03); // Set Low Pass Filter Bandwidth to 41Hz (11.8 ms) for the Accelerometer
-    set_gyro_scale(BITS_FS_1000DPS); // Change the scale of the Gyroscope to +/- 1000 degrees/sec
+    ThisThread::sleep_for(chrono::milliseconds(20));
+    printf("Gyro scale: %d DPS\r\n",set_gyro_scale(BITS_FS_1000DPS)); // Change the scale of the Gyroscope to +/- 1000 degrees/sec
+    ThisThread::sleep_for(chrono::milliseconds(20));
     set_acc_scale(BITS_FS_2G); // Change the scale of the Accelerometer to +/- 2g - Sensitivity: 4096 LSB/mg
-    
 	return true;
     
 }
