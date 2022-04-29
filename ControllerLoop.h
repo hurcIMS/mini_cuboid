@@ -33,7 +33,6 @@ private:
     bool bal_cntrl_enabled;
     bool vel_cntrl_enabled;
     void sendSignal();
-    float est_angle();
     sensors_actuators *m_sa;
-    IIR_filter fil_gyr,fil_acc;
+    float saturate (float,float,float);
 };
