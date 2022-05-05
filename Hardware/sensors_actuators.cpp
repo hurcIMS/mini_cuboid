@@ -3,17 +3,16 @@
 #define PI 3.1415927
 // constructors
 
-sensors_actuators::sensors_actuators(float Ts) : di(2*Ts,Ts),counter(PA_8, PA_9),uw_phi_bd(),
-                            i_enable(PB_1),button(PA_10),i_des(PA_4),uw(4*2048,16),spi(PA_12, PA_11, PA_1),imu(spi, PB_0)
+sensors_actuators::sensors_actuators(float Ts) : di(2*Ts,Ts), counter(PA_8, PA_9), uw_phi_bd(), i_enable(PB_1), button(PA_10), i_des(PA_4), uw(4*2048,16), spi(PA_12, PA_11, PA_1), imu(spi, PB_0)
 {
     i2u.setup(-15,15,0.0f,1.0f);
     ax2ax.setup(0,1,0,1);     // use these for first time, adapt values according 
     ay2ay.setup(0,1,0,1);     //              "
 
-    ax2ax.setup(-16400,16450,-9.81,9.81);
-    ay2ay.setup(-17200,15520,-9.81,9.81);
-    gz2gz.setup(-32767,32768,-1000*PI/180,1000*PI/180);     // check offset (value at standstill)
-// --------------------------------------------------
+    ax2ax.setup(ACC_X_M1G[MCU_UID], ACC_X_P1G[MCU_UID], -9.81, 9.81);
+    ay2ay.setup(ACC_Y_M1G[MCU_UID], ACC_Y_P1G[MCU_UID], -9.81, 9.81);
+    gz2gz.setup(-32767, 32768, -1000*PI/180, 1000*PI/180);     // check offset (value at standstill)
+    // --------------------------------------------------
     button.fall(callback(this, &sensors_actuators::but_pressed));          // attach key pressed function
     button.rise(callback(this, &sensors_actuators::but_released));         // attach key pressed function
     key_was_pressed = false;
@@ -57,7 +56,7 @@ void sensors_actuators::disable_escon(void)
 
 void sensors_actuators::write_current(float _i_des)
 {
-        i_des = i2u(_i_des);   
+    i_des = i2u(_i_des);   
 }
 
 float sensors_actuators::get_phi_fw(void)
@@ -99,7 +98,7 @@ void sensors_actuators::but_pressed()
 void sensors_actuators::but_released()
 {
      // readout, stop and reset timer
-    float ButtonTime = t_but.read();
+    float ButtonTime = std::chrono::duration<float>(t_but.elapsed_time()).count();//t_but.read();
     t_but.stop();
     t_but.reset();
     if(ButtonTime > 0.05f && ButtonTime < 0.5) 

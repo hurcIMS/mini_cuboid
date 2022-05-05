@@ -2,9 +2,13 @@
 #include "sensors_actuators.h"
 #include "ControllerLoop.h"
 
-#define INIT 1
-#define FLAT 2
-#define BALANCE 3
+enum States{
+    INIT = 1,
+    FLAT,
+    BALANCE,
+    WIGGLE
+};
+
 
 
 // This is the loop class, it is not a controller at first hand, it guarantees a cyclic call
@@ -12,18 +16,19 @@ class state_machine
 {
 public:
     state_machine(sensors_actuators *,ControllerLoop *,float Ts);
-    virtual     ~state_machine();
+    virtual     ~state_machine(void);
     void start_loop(void);
 
 private:
     void loop(void);
-    uint8_t CS;             // the current state
-    Thread thread;
-    Ticker ticker;
-    ThreadFlag threadFlag;
-    Timer ti;
-    float Ts;
-    void sendSignal();
+    void sendSignal(void);
+
+    uint8_t m_CS;             // the current state
+    Thread m_thread;
+    Ticker m_ticker;
+    ThreadFlag m_threadFlag;
+    Timer m_ti;
+    float m_Ts;
     sensors_actuators *m_sa;
     ControllerLoop *m_loop;
 };
