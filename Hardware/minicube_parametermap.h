@@ -1,7 +1,20 @@
 #pragma once
 #include <map>
+#include <string>
+
+typedef struct{
+    std::string name;
+    float ACC_X_M1G;
+    float ACC_X_P1G;
+    float ACC_Y_M1G;
+    float ACC_Y_P1G;
+}minicube_t;
 
 static uint64_t MCU_UID = *(uint64_t *)0x1FFF7590;
+
+static std::map<unsigned long long, minicube_t> MINICUBE_PARAM = {
+    {0x533250060068003E, {.name = "blue1", .ACC_X_M1G = -15965.00, .ACC_X_P1G=16870.00, .ACC_Y_M1G = -17208.00, .ACC_Y_P1G = 15620.00}},
+};
 
 static std::map<unsigned long long, float> ACC_X_M1G = {
 	{0x533250060068003E,-15965.00},
