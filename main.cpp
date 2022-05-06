@@ -7,6 +7,8 @@
 #include <stdint.h>
 
 #include "minicube_parametermap.h"
+#include "vector"
+
 
 static BufferedSerial serial_port(USBTX, USBRX);
 
@@ -19,10 +21,6 @@ GPA myGPA(.7, 250, 30, 4, 4, Ts); // para for plant
 //******************************************************************************
 
 int main() {
-
-    printf("%f\n\r",MINICUBE_PARAM[0x533250060068003E].ACC_X_M1G);
-    ThisThread::sleep_for(5s);
-
     // --------- mini cuboid,
     sensors_actuators hardware(Ts); // in this class all the physical ios are handled
     ControllerLoop loop(&hardware, Ts); // this is for the main controller loop

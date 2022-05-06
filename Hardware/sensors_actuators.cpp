@@ -9,8 +9,8 @@ sensors_actuators::sensors_actuators(float Ts) : di(2*Ts,Ts), counter(PA_8, PA_9
     ax2ax.setup(0,1,0,1);     // use these for first time, adapt values according 
     ay2ay.setup(0,1,0,1);     //              "
 
-    ax2ax.setup(ACC_X_M1G[MCU_UID], ACC_X_P1G[MCU_UID], -9.81, 9.81);
-    ay2ay.setup(ACC_Y_M1G[MCU_UID], ACC_Y_P1G[MCU_UID], -9.81, 9.81);
+    ax2ax.setup(MINICUBE[mcu_uid].imu_acc_x_m1g, MINICUBE[mcu_uid].imu_acc_x_p1g, -9.81, 9.81);
+    ay2ay.setup(MINICUBE[mcu_uid].imu_acc_y_m1g, MINICUBE[mcu_uid].imu_acc_y_p1g, -9.81, 9.81);
     gz2gz.setup(-32767, 32768, -1000*PI/180, 1000*PI/180);     // check offset (value at standstill)
     // --------------------------------------------------
     button.fall(callback(this, &sensors_actuators::but_pressed));          // attach key pressed function
